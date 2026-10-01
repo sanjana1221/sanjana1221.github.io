@@ -1,0 +1,287 @@
+/* ===========================================
+   TUTORIAL 3: CSS GRID LAYOUT
+   
+   Your tasks:
+   1. Define the page grid on .page-layout
+   2. Assign grid-area to each section
+   3. Make .list-section items flow with Flexbox
+   4. Add mobile breakpoint under 48rem
+   =========================================== */
+
+/* External font - add your choice from Google Fonts, Inter will not be graded */
+@import url("https://googleapis.com");
+
+:root {
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Colors - customize these */
+  --color-bg: hsl(210, 20%, 98%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-text: hsl(210, 10%, 20%);
+  --color-text-muted: hsl(210, 10%, 50%);
+  --color-accent: hsl(220, 80%, 50%);
+  --color-border: hsla(210, 10%, 20%, 0.1);
+
+  /* Typography */
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif; /* Change this */
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ===========================================
+   TASK 1: PAGE GRID STRUCTURE
+   
+   Define your grid here. You need:
+   - grid-template-areas for the layout map
+   - grid-template-columns for column widths
+   - grid-template-rows for row heights
+   - min-height: 100vh to fill the viewport
+   - gap for spacing between regions
+   =========================================== */
+
+.page-layout {
+  display: grid;
+  /* YOUR CODE: grid-template-areas */
+  /* YOUR CODE: grid-template-columns */
+  /* YOUR CODE: grid-template-rows */
+  min-height: 100vh;
+  gap: 64px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* ===========================================
+   TASK 2: ASSIGN GRID AREAS
+   
+   Connect each section to its named area
+   =========================================== */
+
+.site-header {
+  /* YOUR CODE: grid-area */
+  background: var(--color-surface);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-section {
+  /* YOUR CODE: grid-area */
+  padding: var(--spacing-xl);
+}
+
+.list-section {
+  /* YOUR CODE: grid-area */
+  padding: var(--spacing-lg);
+}
+
+.author-name {
+  color: hsl(0, 0%, 40%);
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.date {
+  color: hsl(0, 0%, 31%);
+  font-family: "Inter", sans-serif;
+  font-weight: 150;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  padding-top: 2px;
+}
+
+.h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 330;
+  font-style: medium;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.card {
+  display: grid;
+  background-color: #ffffff;
+  border-radius: 10px;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  max-width: 471px;
+  padding: 24px;
+  height: fit-content;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 64px;
+  background-color: #f1efef;
+  box-sizing: border-box;
+  border-bottom: 1px solid hsla(210, 10%, 20%, 0.1);
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 64px;
+  gap: 24px;
+  background-color: rgb(255, 255, 255);
+  flex-wrap: wrap;
+}
+
+.body-style {
+  display: grid;
+  grid-template-rows: 64px 1fr 32px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.user-author-name {
+  gap: 8px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: fit-content;
+  width: fit-content;
+}
+
+.user-author-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: fit-content;
+  width: 100%;
+}
+
+.lorem-text {
+  color: #1e1e1e;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: regular;
+  font-size: 15px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  height: fit-content;
+}
+
+.photo-substitute {
+  width: 200px;
+  height: 100px;
+  background-color: hsl(0, 0%, 79%);
+}
+
+.footer {
+  background: hsl(220, 80%, 50%);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.site-footer {
+  /* YOUR CODE: grid-area */
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: var(--spacing-lg);
+  /* NOTE: Footer should not exceed main content width */
+}
+
+/* ===========================================
+   TASK 3: FLEXBOX FOR COMPONENTS
+   
+   Use Flexbox to arrange items WITHIN grid regions
+   =========================================== */
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  padding: 0;
+}
+
+/* Make list items flow horizontally on large screens */
+.list-section {
+  /* YOUR CODE: display flex, gap, wrap behavior */
+}
+
+.list-item {
+  background: var(--color-surface);
+  padding: var(--spacing-lg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  /* YOUR CODE: flex-basis or width for sizing */
+}
+
+/* ===========================================
+   TASK 4: RESPONSIVE BREAKPOINT
+   
+   Under 48rem:
+   - Stack all grid regions vertically
+   - List items should stack vertically too
+   =========================================== */
+
+@media (max-width: 48rem) {
+  .page-layout {
+    /* YOUR CODE: redefine grid-template-areas */
+    /* YOUR CODE: single column layout */
+  }
+
+  .list-section {
+    /* YOUR CODE: change flex-direction if needed */
+  }
+
+  .list-item {
+    /* YOUR CODE: full width on mobile */
+  }
+}
+
+/* ===========================================
+   TYPOGRAPHY (provided)
+   =========================================== */
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
