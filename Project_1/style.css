@@ -1,0 +1,369 @@
+/* ==========================================================
+   RECIPE CARD: green-on-black "retro player" look
+   Sections:
+   1. Variables
+   2. Reset and base
+   3. Page layout (CSS Grid, grid-template-areas)
+   4. Title bar and window buttons
+   5. Hero: picture and key facts (Flexbox + Grid)
+   6. Panels (Description, Ingredients, Instructions)
+   7. Ingredients (Flexbox, checkable)
+   8. Instructions (Flexbox, numbered steps)
+   9. Footer
+   10. Desktop layout (48rem and up)
+   11. Very wide screens (90rem and up)
+   ========================================================== */
+
+/* ---------- 1. Variables ---------- */
+:root {
+  /* Colors */
+  --color-bg: #000000;
+  --color-text: #28f43d; /* bright green: all text (about 12:1 on black) */
+  --color-line: #1a9e2a; /* dimmer green: inner borders and rules (about 6:1) */
+
+  /* Fonts (2 families total) */
+  --font-display: "VT323", "Courier New", monospace;
+  --font-body: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Spacing scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+
+  /* Borders */
+  --border-outer: 3px solid var(--color-text);
+  --border-inner: 2px solid var(--color-line);
+}
+
+/* ---------- 2. Reset and base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding: var(--space-sm);
+}
+
+a {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+/* Visible keyboard focus */
+:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+/* ---------- 3. Page layout (mobile first: one column) ---------- */
+.recipe {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "header"
+    "hero"
+    "strip"
+    "description"
+    "ingredients"
+    "instructions"
+    "footer";
+  grid-template-rows: auto auto auto auto auto 1fr auto;
+  gap: var(--space-md);
+  min-height: calc(100vh - 1rem); /* fill the viewport height */
+  padding: var(--space-sm);
+  border: var(--border-outer);
+}
+
+.recipe-header {
+  grid-area: header;
+}
+.recipe-hero {
+  grid-area: hero;
+}
+.cookie-strip {
+  grid-area: strip;
+}
+.recipe-description {
+  grid-area: description;
+}
+.recipe-ingredients {
+  grid-area: ingredients;
+}
+.recipe-instructions {
+  grid-area: instructions;
+}
+.recipe-footer {
+  grid-area: footer;
+}
+
+/* ---------- 4. Title bar and window buttons ---------- */
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-outer);
+}
+
+.recipe-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header-icon {
+  width: 1.5rem;
+  height: auto;
+}
+
+.recipe-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.window-controls {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: var(--border-inner);
+  font-size: 0.75rem;
+}
+
+/* ---------- 5. Hero: picture and key facts ---------- */
+.recipe-hero {
+  display: flex;
+  flex-direction: column; /* stacked on mobile */
+  gap: var(--space-sm);
+}
+
+.hero-art {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* Vertical label, reads bottom to top, OUTSIDE the picture frame */
+.side-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+  padding: var(--space-sm);
+  border: var(--border-inner);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.art-frame {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  border: var(--border-inner);
+}
+
+.recipe-image {
+  width: 100%;
+  max-width: 14rem;
+  height: auto;
+}
+
+/* Key facts: equal-size cards that wrap */
+.recipe-meta {
+  flex: 1; /* takes all remaining width */
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border: var(--border-inner);
+}
+
+.meta-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+  border: var(--border-inner);
+}
+
+.meta-card dt {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.meta-card dd {
+  font-size: 1rem;
+}
+
+/* Decorative strip of tiny cookies, drawn with a repeating background */
+.cookie-strip {
+  height: 2rem;
+  border: var(--border-inner);
+  background: url("images/Cookie.svg") repeat-x center / 1.25rem auto;
+}
+
+/* ---------- 6. Panels ---------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.panel-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-right: var(--space-sm);
+  border: var(--border-inner);
+}
+
+.panel-title {
+  padding: var(--space-xs) var(--space-md);
+  border: var(--border-outer);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.panel-rule {
+  flex: 1;
+  height: 4px;
+  background-color: var(--color-line);
+}
+
+.panel-body {
+  flex: 1; /* boxes in the same row get the same height */
+  padding: var(--space-md);
+  border: var(--border-inner);
+  border-top: 0;
+}
+
+/* ---------- 7. Ingredients (Flexbox, checkable) ---------- */
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: none;
+}
+
+.ingredients-list label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 2.75rem; /* easy to tap with messy hands */
+  cursor: pointer;
+}
+
+.ingredients-list input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: var(--color-text);
+}
+
+/* Checked items get a line through them */
+.ingredients-list input:checked + span {
+  text-decoration: line-through;
+}
+
+/* ---------- 8. Instructions (Flexbox, numbered steps) ---------- */
+.instructions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  list-style: none;
+  counter-reset: step;
+}
+
+.instruction-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  counter-increment: step;
+  font-size: 1.125rem; /* a little larger: readable at arm's length */
+  max-width: 70ch; /* comfortable line length */
+}
+
+.instruction-step::before {
+  content: counter(step);
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--border-inner);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* ---------- 9. Footer ---------- */
+.recipe-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  justify-content: space-between;
+  padding: var(--space-md);
+  border: var(--border-inner);
+  font-size: 0.875rem;
+}
+
+/* ---------- 10. Desktop layout (48rem and up) ---------- */
+@media (min-width: 48rem) {
+  body {
+    padding: var(--space-md);
+  }
+
+  .recipe {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* two equal columns */
+    grid-template-areas:
+      "header      header"
+      "hero        hero"
+      "strip       strip"
+      "description ingredients"
+      "instructions instructions"
+      "footer      footer";
+    grid-template-rows: auto auto auto auto 1fr auto;
+    padding: var(--space-md);
+    min-height: calc(100vh - 2rem);
+  }
+
+  .recipe-hero {
+    flex-direction: row; /* picture beside the facts */
+  }
+
+  .hero-art {
+    flex: 0 0 auto;
+  }
+}
+
+/* ---------- 11. Very wide screens (90rem and up): side space ---------- */
+@media (min-width: 90rem) {
+  body {
+    padding-inline: 15rem; /* 240px of space on each side */
+  }
+}
